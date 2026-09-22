@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StyleNest971 - Flipkart Style Store</title>
+<title>StyleNest971 - Premium Store</title>
 <style>
 body{font-family:Roboto,Arial;margin:0;background:#f1f3f6}
 .header{background:#2874f0;color:white;padding:12px 20px;font-weight:bold;font-size:20px}
@@ -24,18 +24,18 @@ body{font-family:Roboto,Arial;margin:0;background:#f1f3f6}
 <div class="header">StyleNest971</div>
 <div class="container">
   <div class="left">
-    <img class="img" src="https://via.placeholder.com/400x500?text=Upload+Your+Product+Photo">
+    <img class="img" src="https://via.placeholder.com/400x500?text=Upload+Product+Photo">
     <div style="background:#e8f5e9;padding:10px;border-radius:6px;margin-top:10px">✅ COD | ✅ Free Delivery | ✅ Easy Return</div>
   </div>
   <div class="right">
-    <h2>Stylish Product - Meesho Best Seller</h2>
+    <h2>Stylish Product - Best Seller</h2>
     <div><span class="price">₹599</span><span class="mrp">₹1299</span><span class="off">53% OFF</span></div>
     <p style="color:green;font-weight:bold">✓ In Stock</p>
     <h3>Delivery Details</h3>
-    <input class="input" id="cName" placeholder="Tumcha Purn Naav">
-    <input class="input" id="cMobile" placeholder="Mobile Number">
-    <textarea class="input" id="cAddr" placeholder="Purn Address + Pin Code"></textarea>
-    <button class="btn btn-cart" onclick="alert('Cart madhe add zala!')">ADD TO CART</button>
+    <input class="input" id="cName" placeholder="Enter Full Name">
+    <input class="input" id="cMobile" placeholder="Enter Mobile Number">
+    <textarea class="input" id="cAddr" placeholder="Enter Full Address + Pin Code"></textarea>
+    <button class="btn btn-cart" onclick="alert('Added to Cart!')">ADD TO CART</button>
     <button class="btn btn-buy" onclick="orderOnWhatsApp()">PLACE ORDER - WhatsApp</button>
   </div>
 </div>
@@ -44,9 +44,9 @@ function orderOnWhatsApp(){
   let name=document.getElementById('cName').value;
   let mobile=document.getElementById('cMobile').value;
   let addr=document.getElementById('cAddr').value;
-  if(name.length<3){alert('Naav taka');return;}
-  if(mobile.length<10){alert('Mobile taka');return;}
-  if(addr.length<10){alert('Address taka');return;}
+  if(name.length<3){alert('Please enter name');return;}
+  if(mobile.length<10){alert('Please enter mobile');return;}
+  if(addr.length<10){alert('Please enter address');return;}
   let msg=`*NEW ORDER - StyleNest971*%0AProduct: Stylish Product%0APrice: Rs.599%0A%0ACustomer: ${name}%0AMobile: ${mobile}%0AAddress: ${addr}%0A%0APayment: COD`;
   window.open(`https://wa.me/917219384469?text=${msg}`,'_blank');
 }
