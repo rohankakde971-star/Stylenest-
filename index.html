@@ -1,55 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StyleNest971 - Premium Store</title>
-<style>
-body{font-family:Roboto,Arial;margin:0;background:#f1f3f6}
-.header{background:#2874f0;color:white;padding:12px 20px;font-weight:bold;font-size:20px}
-.container{display:flex;flex-wrap:wrap;max-width:1100px;margin:10px auto;background:white;padding:15px;border-radius:8px}
-.left{flex:1;min-width:300px;text-align:center}
-.right{flex:1;min-width:300px;padding:15px}
-.img{width:90%;border:1px solid #eee;border-radius:8px}
-.price{font-size:28px;font-weight:bold}
-.mrp{color:gray;text-decoration:line-through;margin-left:10px}
-.off{color:green;margin-left:10px;font-weight:bold}
-.btn{width:100%;padding:16px;font-size:18px;font-weight:bold;border:none;border-radius:8px;margin-top:10px;cursor:pointer}
-.btn-cart{background:#ff9f00;color:white}
-.btn-buy{background:#fb641b;color:white}
-.input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;box-sizing:border-box}
-</style>
-</head>
-<body>
-<div class="header">StyleNest971</div>
-<div class="container">
-  <div class="left">
-    <img class="img" src="https://via.placeholder.com/400x500?text=Upload+Product+Photo">
-    <div style="background:#e8f5e9;padding:10px;border-radius:6px;margin-top:10px">✅ COD | ✅ Free Delivery | ✅ Easy Return</div>
-  </div>
-  <div class="right">
-    <h2>Stylish Product - Best Seller</h2>
-    <div><span class="price">₹599</span><span class="mrp">₹1299</span><span class="off">53% OFF</span></div>
-    <p style="color:green;font-weight:bold">✓ In Stock</p>
-    <h3>Delivery Details</h3>
-    <input class="input" id="cName" placeholder="Enter Full Name">
-    <input class="input" id="cMobile" placeholder="Enter Mobile Number">
-    <textarea class="input" id="cAddr" placeholder="Enter Full Address + Pin Code"></textarea>
-    <button class="btn btn-cart" onclick="alert('Added to Cart!')">ADD TO CART</button>
-    <button class="btn btn-buy" onclick="orderOnWhatsApp()">PLACE ORDER - WhatsApp</button>
-  </div>
-</div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>StyleNest971</title><style>body{margin:0;font-family:Arial;background:#f5f5f5}.header{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#fff;position:sticky;top:0;z-index:10;box-shadow:0 2px 5px #0001}.logo{color:#e91e63;font-weight:bold;font-size:22px}.cart{background:#000;color:#fff;padding:8px 15px;border-radius:20px;font-size:14px}.banner{background:linear-gradient(90deg,#e91e63,#9c27b0);color:#fff;text-align:center;padding:25px 10px}.banner h1{margin:0;font-size:26px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;padding-bottom:80px}.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #0001}.card img{width:100%;height:180px;object-fit:cover}.info{padding:10px}.price{color:#e91e63;font-weight:bold;font-size:18px}.mrp{color:grey;text-decoration:line-through;font-size:13px;margin-left:5px}.btns{display:flex;gap:6px;margin-top:8px}.b1{flex:1;padding:8px;border:1px solid #000;background:#fff;border-radius:8px;font-weight:bold;font-size:12px}.b2{flex:1;padding:8px;border:none;background:#e91e63;color:#fff;border-radius:8px;font-weight:bold;font-size:12px}#checkout{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:100;padding:15px;box-sizing:border-box;overflow:auto}.input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}.buy{background:#fb641b;color:#fff;width:100%;padding:14px;border:none;border-radius:8px;font-weight:bold;margin-top:10px;font-size:16px}</style></head><body>
+<div class="header"><div class="logo">StyleNest ✨</div><div class="cart">🛒 Cart (0)</div></div>
+<div class="banner"><h1>Meesho Style Sale -<br>50% OFF</h1><div>Free Delivery + COD</div></div>
+<div class="grid" id="grid"></div>
+<div id="checkout"><h2 id="pname"></h2><p>Free Delivery + COD</p><input class="input" id="cname" placeholder="Enter Full Name"><input class="input" id="cmob" placeholder="Enter Mobile Number"><textarea class="input" id="caddr" placeholder="Full Address + Pin Code" rows="3"></textarea><button class="buy" onclick="orderWA()">PLACE ORDER - WhatsApp</button><button class="b1" style="width:100%;margin-top:10px;padding:12px" onclick="document.getElementById('checkout').style.display='none'">Back to Shop</button></div>
 <script>
-function orderOnWhatsApp(){
-  let name=document.getElementById('cName').value;
-  let mobile=document.getElementById('cMobile').value;
-  let addr=document.getElementById('cAddr').value;
-  if(name.length<3){alert('Please enter name');return;}
-  if(mobile.length<10){alert('Please enter mobile');return;}
-  if(addr.length<10){alert('Please enter address');return;}
-  let msg=`*NEW ORDER - StyleNest971*%0AProduct: Stylish Product%0APrice: Rs.599%0A%0ACustomer: ${name}%0AMobile: ${mobile}%0AAddress: ${addr}%0A%0APayment: COD`;
-  window.open(`https://wa.me/917219384469?text=${msg}`,'_blank');
-}
+let products=[
+{name:"Women Trendy Kurta Set",price:599,mrp:1299,img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400"},
+{name:"Men Oversized T-Shirt",price:399,mrp:799,img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},
+{name:"Designer Saree",price:799,mrp:1999,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},
+{name:"Kids Ethnic Dress",price:499,mrp:1299,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400"},
+{name:"Women Palazzo Pant",price:549,mrp:1199,img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400"},
+{name:"Men Casual Shirt",price:459,mrp:999,img:"https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400"},
+{name:"Lehenga Choli Set",price:899,mrp:2499,img:"https://images.unsplash.com/photo-1583391733956-3750e79ff35e?w=400"},
+{name:"Girls Frock Dress",price:399,mrp:899,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400"}
+];
+let grid=document.getElementById('grid');let sel="";
+products.forEach(p=>{grid.innerHTML+=`<div class="card"><img src="${p.img}"><div class="info"><b>${p.name}</b><div><span class="price">₹${p.price}</span><span class="mrp">₹${p.mrp}</span></div><div class="btns"><button class="b1">Add to Cart</button><button class="b2" onclick="buy('${p.name} - Rs.${p.price}')">BUY NOW</button></div></div></div>`});
+function buy(p){sel=p;document.getElementById('pname').innerText=p;document.getElementById('checkout').style.display='block';window.scrollTo(0,0);}
+function orderWA(){let n=document.getElementById('cname').value,m=document.getElementById('cmob').value,a=document.getElementById('caddr').value;if(n.length<3){alert('Enter Name');return}if(m.length<10){alert('Enter Mobile');return}let msg=`*NEW ORDER - StyleNest971*%0AProduct: ${sel}%0AName: ${n}%0AMobile: ${m}%0AAddress: ${a}%0APayment: COD`;window.location.href=`https://wa.me/917219384469?text=${msg}`;}
 </script>
-</body>
-</html>
+</body></html>
