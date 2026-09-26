@@ -1,106 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Premium Collection ✨</title>
+<title>StyleNest - Premium Fashion Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:sans-serif;background:#f5f5f5}
-.top{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:#fff;position:sticky;top:0;z-index:10}
-.logo{color:#e91e63;font-weight:bold;font-size:22px}
-.cart-btn{background:#111;color:#fff;padding:8px 16px;border-radius:20px;border:none}
-.banner{background:linear-gradient(to right,#e91e63,#9c27b0);color:#fff;text-align:center;padding:25px 10px}
-.banner h1{margin:0;font-size:28px;line-height:1.2}
-.banner p{margin:5px 0 0;font-size:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px}
-.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 2px 8px #0001}
-.card img{width:100%;height:220px;object-fit:cover}
-.card-body{padding:10px}
-.card-title{font-weight:bold;font-size:15px;height:40px;overflow:hidden}
-.price{color:#e91e63;font-weight:bold;font-size:18px;margin:6px 0}
-.old{color:gray;text-decoration:line-through;font-size:13px;margin-left:5px}
-.btn-row{display:flex;gap:8px;margin-top:8px}
-.btn-cart{flex:1;background:#fff;border:1.5px solid #000;border-radius:10px;padding:10px 2px;font-weight:bold}
-.btn-buy{flex:1;background:#e91e63;color:#fff;border:none;border-radius:10px;padding:10px 2px;font-weight:bold}
-#orderModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;z-index:100;align-items:center;justify-content:center}
-.modal{background:#fff;width:90%;max-width:350px;border-radius:15px;padding:20px}
-.modal input,.modal textarea{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ccc;box-sizing:border-box}
-.modal button{width:100%;background:#e91e63;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:bold;margin-top:10px;font-size:16px}
+:root{--white:#fff;--off:#fafaf8;--black:#111;--grey:#6b7280;--border:#eeeeee;--light:#f5f5f5}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:var(--white);color:var(--black);-webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.logo{font-family:'Playfair Display',serif;font-size:26px;letter-spacing:-0.5px;font-weight:700}.logo span{color:#e91e63}
+.menu{display:flex;gap:16px;font-size:13px;letter-spacing:0.5px;color:var(--grey);font-weight:600}.menu b{color:var(--black);border-bottom:2px solid var(--black);padding-bottom:2px}
+.hero{background:var(--off);padding:50px 20px;text-align:center;border-bottom:1px solid var(--border)}
+.hero h1{font-family:'Playfair Display',serif;font-size:36px;margin:0;line-height:1.1;letter-spacing:-1px}.hero p{margin:12px 0 0;color:var(--grey);font-size:12px;letter-spacing:2.5px;text-transform:uppercase}
+.trustbar{display:flex;justify-content:center;gap:24px;padding:12px;background:#fff;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:0.5px;color:#333}
+.filters{padding:16px 20px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;background:#fff;position:sticky;top:61px;z-index:40;border-bottom:1px solid var(--border)}
+.filters button{padding:9px 18px;border-radius:100px;border:1px solid var(--border);background:#fff;font-size:13px;font-weight:600;white-space:nowrap;transition:0.2s}.filters .active{background:var(--black);color:#fff;border-color:var(--black)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px;background:var(--off)}
+.card{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--border);transition:0.3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 25px #0000000f}
+.card .imgbox{position:relative;overflow:hidden;background:var(--light)}.card img{width:100%;height:280px;object-fit:cover;display:block;transition:0.5s}.card:hover img{transform:scale(1.05)}
+.quick{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#ffffffeb;backdrop-filter:blur(8px);padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:0.5px;opacity:0;transition:0.3s;border:1px solid var(--border)}.card:hover .quick{opacity:1}
+.badge{position:absolute;top:10px;left:10px;background:var(--black);color:#fff;font-size:10px;padding:4px 8px;border-radius:20px;font-weight:700;letter-spacing:0.5px}
+.card-body{padding:14px}.title{font-size:14px;font-weight:600;line-height:1.35;height:38px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.price-row{margin-top:8px;display:flex;align-items:center;gap:8px}.price{font-size:16px;font-weight:700}.old{font-size:12px;color:var(--grey);text-decoration:line-through}.off{font-size:11px;color:#16a34a;font-weight:700}
+.actions{display:flex;gap:8px;margin-top:12px}.btn-cart{flex:1;background:#fff;border:1.5px solid var(--black);border-radius:10px;padding:11px 0;font-weight:700;font-size:13px}.btn-buy{flex:1;background:var(--black);color:#fff;border:none;border-radius:10px;padding:11px 0;font-weight:700;font-size:13px}
+.section{padding:36px 20px;background:#fff;border-top:1px solid var(--border)}.section h2{font-family:'Playfair Display',serif;font-size:26px;margin:0 0 8px}.section .sub{color:var(--grey);font-size:14px;margin:0 0 20px}
+.review-card{background:var(--off);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}.stars{color:#f59e0b;font-size:13px}
+.story{background:var(--off);text-align:center}.story p{max-width:620px;margin:0 auto;color:#444;line-height:1.7;font-size:15px}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.video-box{background:#111;border-radius:16px;height:180px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;position:relative;overflow:hidden}.video-box span{position:absolute;bottom:8px;left:8px;background:#ffffff22;padding:4px 8px;border-radius:20px;font-size:11px}
+.footer{background:#111;color:#fff;padding:36px 20px}.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.footer h4{font-size:12px;letter-spacing:1.5px;margin:0 0 12px;color:#fff}.footer a,.footer p{color:#9ca3af;font-size:13px;line-height:1.9;text-decoration:none;display:block}.payments{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap}.payments span{background:#fff;color:#111;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:800}
+#quickView,#orderModal{position:fixed;inset:0;background:#00000080;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal{background:#fff;width:100%;max-width:400px;border-radius:20px;padding:24px;animation:pop 0.25s}@keyframes pop{from{transform:scale(0.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h3{font-family:'Playfair Display',serif;margin:0 0 6px;text-align:center;font-size:22px}.modal .small{color:var(--grey);font-size:12px;text-align:center;margin-bottom:14px}
+.modal input,.modal textarea{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;margin:6px 0;font-family:'Inter';font-size:14px;background:var(--off)}
+.modal button{width:100%;padding:14px;border:none;border-radius:12px;font-weight:700;margin-top:10px;font-size:14px}.b-black{background:var(--black);color:#fff}.b-light{background:var(--light);color:var(--black)}
+#cartDrawer{position:fixed;top:0;right:-100%;width:88%;max-width:380px;height:100%;background:#fff;z-index:110;transition:0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:-10px 0 40px #0002;display:flex;flex-direction:column}#cartDrawer.open{right:0}
+.wa{position:fixed;bottom:20px;right:20px;background:#25D366;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 8px 20px #0003;z-index:60;text-decoration:none}
 </style>
 </head>
 <body>
 <div class="top">
-<div class="logo">Premium Collection ✨</div>
-<button class="cart-btn">🛒 Cart (<span id="cartCount">0</span>)</button>
+<div class="logo">StyleNest<span>.</span></div>
+<div style="display:flex;align-items:center;gap:14px">
+<div class="menu"><b>ALL</b> MEN WOMEN</div>
+<button onclick="openCart()" style="background:var(--black);color:#fff;border:none;padding:9px 16px;border-radius:100px;font-weight:700;font-size:13px">CART <span id="cartCount">0</span></button>
 </div>
-<div class="banner">
-<h1>Meesho Style Sale - 50% OFF</h1>
-<p>Free Delivery + COD</p>
 </div>
+
+<div class="hero">
+<h1>Minimal. Premium.<br>Timeless Fashion.</h1>
+<p>Free Delivery • COD Available • 7 Days Easy Return</p>
+</div>
+<div class="trustbar"><span>✓ 100% SECURE PAYMENT</span><span>✓ PREMIUM QUALITY</span><span>✓ FAST DELIVERY</span></div>
+
+<div class="filters" id="filters">
+<button class="active" onclick="setCat('All',this)">All Products</button>
+<button onclick="setCat('Women',this)">Women</button>
+<button onclick="setCat('Men',this)">Men</button>
+<button onclick="setCat('Saree',this)">Saree</button>
+<button onclick="setCat('Jewellery',this)">Jewellery</button>
+<button onclick="setCat('Watches',this)">Watches</button>
+</div>
+
 <div class="grid" id="grid"></div>
 
-<div id="orderModal">
-<div class="modal">
-<h3 style="margin:0;text-align:center">Order Details Bhara</h3>
-<input id="cName" placeholder="Tumcha Nav">
-<input id="cMobile" placeholder="Mobile Number" type="number">
-<textarea id="cAddr" placeholder="Full Address - Gaav, Taluka, Pincode"></textarea>
-<p id="selProd" style="font-weight:bold;color:#e91e63"></p>
-<button onclick="placeOrder()">Order Confirm Kara ✅</button>
-<button onclick="closeModal()" style="background:#ddd;color:#000;margin-top:8px">Cancel</button>
+<div class="section">
+<h2>What Our Customers Say</h2><p class="sub">Trusted by 5000+ happy customers ★ 4.8/5 Rating</p>
+<div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Priya S. from Nagpur</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Quality is exceptional! Looks better than the photos. Fast delivery to my village. Highly recommend StyleNest."</p></div>
+<div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Rahul M. from Pune</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Watch quality is amazing for this price. Premium packaging. Will order again."</p></div>
+<div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Anjali K. from Aurangabad</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Saree is beautiful, everyone asked where I bought it. 100% premium cotton."</p></div>
+</div>
+
+<div class="section" style="background:var(--off)">
+<h2>Video Reviews</h2><p class="sub">Real customers wearing our collection</p>
+<div class="video-grid">
+<div class="video-box">▶️ @priya_stylenest <span>#OOTD</span></div>
+<div class="video-box">▶️ @rahul_mens <span>Unboxing</span></div>
 </div>
 </div>
 
+<div class="section story">
+<h2>Our Story</h2>
+<p>StyleNest was born in Gangapur with one mission — to bring <b>premium, handcrafted fashion</b> at affordable prices. We work directly with weavers and artisans. No middleman. <br><br>100% Premium Cotton • Handcrafted Jewellery • Ethically Made</p>
+</div>
+
+<div class="footer">
+<div class="f-grid">
+<div><h4>CONTACT & SUPPORT</h4><p>WhatsApp: +91 7219384469</p><p>Gangapur, Sambhajinagar, MH</p><p>Instagram: @stylenest971</p><p>Support: 10AM - 8PM</p></div>
+<div><h4>POLICIES</h4><a>Privacy Policy</a><a>Shipping Policy</a><a>Return & Exchange</a><a>Terms of Service</a><a>FAQs</a></div>
+</div>
+<div class="payments"><span>VISA</span><span>MASTERCARD</span><span>UPI</span><span>NET BANKING</span><span>COD</span><span>SECURE PAYMENTS 🔒</span></div>
+<p style="text-align:center;margin-top:28px;color:#6b7280;font-size:11px;letter-spacing:1px">© 2026 STYLENEST. CRAFTED WITH LOVE IN MAHARASHTRA.</p>
+</div>
+
+<a class="wa" href="https://wa.me/917219384469">💬</a>
+
+<div id="cartDrawer">
+<div style="padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)"><h3 style="margin:0;font-family:'Playfair Display'">Your Cart</h3><button onclick="closeCart()" style="border:none;background:var(--light);width:36px;height:36px;border-radius:50%">✕</button></div>
+<div id="cartItems" style="flex:1;overflow:auto;padding:10px 20px"></div>
+<div style="padding:20px;border-top:1px solid var(--border)"><button class="b-black" style="width:100%;padding:15px;border-radius:12px;font-weight:700" onclick="checkoutCart()">Proceed to Checkout</button></div>
+</div>
+
+<div id="quickView"><div class="modal" style="max-width:360px;padding:0;overflow:hidden"><img id="qvImg" style="width:100%;height:380px;object-fit:cover"><div style="padding:18px"><h3 id="qvName" style="text-align:left;margin:0"></h3><p id="qvPrice" style="font-weight:700;margin:8px 0"></p><p style="color:var(--grey);font-size:13px;line-height:1.5">Premium quality fabric with attention to detail. Model is wearing size M. 100% breathable cotton.</p><div style="display:flex;gap:8px;margin-top:14px"><button class="b-light" style="flex:1" onclick="closeQV()">Close</button><button class="b-black" style="flex:1" id="qvBuy">Buy Now</button></div></div></div></div>
+
+<div id="orderModal"><div class="modal">
+<h3>Order Details</h3><p class="small">Cash on Delivery Available</p>
+<p id="selProd" style="text-align:center;font-weight:700;color:#111;background:var(--off);padding:10px;border-radius:10px;font-size:13px"></p>
+<input id="cName" placeholder="Full Name"><input id="cMobile" placeholder="Mobile Number" type="tel"><textarea id="cAddr" placeholder="Full Address with Pincode, Taluka"></textarea>
+<button class="b-black" onclick="placeOrder()">Confirm Order</button>
+<button class="b-light" onclick="closeModal()">Cancel</button>
+<p style="text-align:center;color:var(--grey);font-size:11px;margin-top:10px">🔒 100% Secure • Your data is safe</p>
+</div></div>
+
 <script>
-let defaultProducts=[
-{name:"Women Trendy Kurta Set",price:"599",oldprice:"1299",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",cat:"Women"},
-{name:"Men Oversized T-Shirt",price:"399",oldprice:"799",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",cat:"Men"},
-{name:"Designer Saree",price:"899",oldprice:"1999",img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",cat:"Saree"},
-{name:"Kids Casual Wear",price:"499",oldprice:"999",img:"https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=400",cat:"Kids"},
-{name:"Kundan Jewellery Set",price:"349",oldprice:"999",img:"https://images.unsplash.com/photo-1603561596112-0a132b757442?w=400",cat:"Jewellery"},
-{name:"Luxury Black Watch",price:"599",oldprice:"1499",img:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400",cat:"Watches"}
+let products=[
+{name:"Premium Cotton Kurta Set",price:"599",oldprice:"1299",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",cat:"Women"},
+{name:"Men Oversized T-Shirt - Black",price:"399",oldprice:"799",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",cat:"Men"},
+{name:"Pure Handloom Saree",price:"899",oldprice:"1999",img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800",cat:"Saree"},
+{name:"Women Chic Co-ord Set",price:"699",oldprice:"1499",img:"https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=800",cat:"Women"},
+{name:"Kundan Heritage Jewellery Set",price:"349",oldprice:"999",img:"https://images.unsplash.com/photo-1603561596112-0a132b757442?w=800",cat:"Jewellery"},
+{name:"Minimalist Black Chronograph Watch",price:"599",oldprice:"1499",img:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800",cat:"Watches"},
+{name:"Gold Plated Temple Necklace",price:"449",oldprice:"1299",img:"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800",cat:"Jewellery"},
+{name:"Couple Watch - His & Hers",price:"799",oldprice:"1999",img:"https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=800",cat:"Watches"}
 ];
-let allProducts=[...defaultProducts];
-let selectedProd=null;
-let grid=document.getElementById('grid');
+let curCat='All', selProd=null, cart=JSON.parse(localStorage.getItem('cart')||'[]');
+function setCat(c,el){curCat=c; document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active')); el.classList.add('active'); render();}
 function render(){
-grid.innerHTML="";
-allProducts.forEach((p,i)=>{
-let div=document.createElement('div');
-div.className="card";
-div.innerHTML=`<img src="${p.img}"><div class="card-body"><div class="card-title">${p.name}</div><div class="price">₹${p.price}<span class="old">₹${p.oldprice}</span></div><div class="btn-row"><button class="btn-cart">Add to Cart</button><button class="btn-buy" onclick="openModal(${i})">BUY NOW</button></div></div>`;
-grid.appendChild(div);
+let g=document.getElementById('grid'); g.innerHTML='';
+products.filter(p=>curCat=='All'||p.cat==curCat).forEach(p=>{
+let d=document.createElement('div'); d.className='card';
+d.innerHTML=`<div class="imgbox" onclick="openQV('${p.name}')"><span class="badge">50% OFF</span><img src="${p.img}" loading="lazy"><span class="quick">Quick View</span></div><div class="card-body"><div class="title">${p.name}</div><div class="price-row"><span class="price">₹${p.price}</span><span class="old">₹${p.oldprice}</span><span class="off">${Math.round((1-p.price/p.oldprice)*100)}% OFF</span></div><div class="actions"><button class="btn-cart" onclick="addCart('${p.name.replace(/'/g,"\\'")}')">Add to Cart</button><button class="btn-buy" onclick="openModal('${p.name.replace(/'/g,"\\'")}')">Buy Now</button></div></div>`;
+g.appendChild(d);
 });
+document.getElementById('cartCount').innerText=cart.length;
 }
-function openModal(i){
-selectedProd=allProducts[i];
-document.getElementById('selProd').innerText=selectedProd.name+" - Rs."+selectedProd.price;
-document.getElementById('orderModal').style.display='flex';
-}
+function addCart(name){let p=products.find(x=>x.name==name); cart.push(p); localStorage.setItem('cart',JSON.stringify(cart)); render(); openCart();}
+function openCart(){let it=document.getElementById('cartItems'); it.innerHTML=cart.length?cart.map((c,i)=>`<div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)"><img src="${c.img}" style="width:56px;height:56px;border-radius:10px;object-fit:cover"><div style="flex:1"><div style="font-size:13px;font-weight:600">${c.name}</div><div style="font-size:13px;margin-top:2px">₹${c.price}</div></div><button onclick="removeCart(${i})" style="border:none;background:none;color:#999">✕</button></div>`).join(''):`<p style="color:var(--grey);text-align:center;margin-top:40px">Your cart is empty</p>`; document.getElementById('cartDrawer').classList.add('open');}
+function closeCart(){document.getElementById('cartDrawer').classList.remove('open');}
+function removeCart(i){cart.splice(i,1); localStorage.setItem('cart',JSON.stringify(cart)); openCart(); render();}
+function checkoutCart(){if(!cart.length)return alert('Cart is empty'); selProd={name:cart.map(c=>c.name).join(', '),price:cart.reduce((s,c)=>s+parseInt(c.price),0)}; closeCart(); document.getElementById('selProd').innerText=selProd.name+' • ₹'+selProd.price; document.getElementById('orderModal').style.display='flex';}
+function openQV(name){let p=products.find(x=>x.name==name); document.getElementById('qvImg').src=p.img; document.getElementById('qvName').innerText=p.name; document.getElementById('qvPrice').innerText='₹'+p.price+' '; document.getElementById('qvBuy').onclick=()=>{closeQV(); openModal(p.name);}; document.getElementById('quickView').style.display='flex';}
+function closeQV(){document.getElementById('quickView').style.display='none';}
+function openModal(name){selProd=products.find(x=>x.name==name); document.getElementById('selProd').innerText=selProd.name+' • ₹'+selProd.price; document.getElementById('orderModal').style.display='flex';}
 function closeModal(){document.getElementById('orderModal').style.display='none';}
 function placeOrder(){
-let name=document.getElementById('cName').value;
-let mobile=document.getElementById('cMobile').value;
-let addr=document.getElementById('cAddr').value;
-if(!name||!mobile||!addr){alert('Sagla bhara dada!');return;}
+let n=document.getElementById('cName').value.trim(), m=document.getElementById('cMobile').value.trim(), a=document.getElementById('cAddr').value.trim();
+if(!n||!m||!a)return alert('Please fill all fields');
 let orders=JSON.parse(localStorage.getItem('orders')||'[]');
-let order={
-id:Math.floor(10000+Math.random()*90000),
-product:selectedProd.name,
-price:selectedProd.price,
-customerName:name,
-mobile:mobile,
-address:addr,
-date:new Date().toLocaleString(),
-status:"Pending"
-};
-orders.push(order);
+orders.push({id:Math.floor(10000+Math.random()*90000),product:selProd.name,price:selProd.price,customerName:n,mobile:m,address:a,date:new Date().toLocaleString(),status:'Pending'});
 localStorage.setItem('orders',JSON.stringify(orders));
-alert('Order Success! ✅ Admin panel madhe bagh');
-closeModal();
-document.getElementById('cName').value='';
-document.getElementById('cMobile').value='';
-document.getElementById('cAddr').value='';
+cart=[]; localStorage.setItem('cart','[]'); render();
+alert('Order Confirmed! Thank you for shopping with StyleNest.'); closeModal();
+document.getElementById('cName').value=''; document.getElementById('cMobile').value=''; document.getElementById('cAddr').value='';
 }
 render();
 </script>
