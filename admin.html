@@ -1,66 +1,93 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Panel - StyleNest</title>
+<title>StyleNest Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-body{font-family:sans-serif;background:#f2f2f2;padding:15px}
-.card{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px #0001}
-input,select{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px}
-button{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:5px;font-weight:bold}
-img{width:100%;border-radius:5px}
-.cat{font-size:11px;background:#000;color:#fff;padding:3px 8px;border-radius:10px}
+:root{--black:#111;--white:#fff;--off:#fafaf8;--border:#eeeeee;--grey:#6b7280}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:var(--off);color:var(--black)}
+#login{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.login-box{background:#fff;border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:360px;text-align:center;box-shadow:0 10px 40px #0001}
+.top{background:#fff;border-bottom:1px solid var(--border);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+.logo{font-family:'Playfair Display',serif;font-weight:700;font-size:22px}.logo span{color:#e91e63}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px}.stat h4{margin:0;color:var(--grey);font-size:11px;letter-spacing:1px}.stat h2{margin:6px 0 0;font-size:24px}
+.controls{padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:61px;z-index:10;background:var(--off)}
+.controls input{flex:1;min-width:180px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:13px}
+.controls select,.controls button{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font-weight:600;font-size:13px}
+.btn-black{background:var(--black)!important;color:#fff!important}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin:0 16px 12px}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.id{background:#111;color:#fff;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.info{font-size:13px;line-height:1.7;color:#333}
+.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);font-weight:600;font-size:12px}
+.btn-wa{background:#25D366;color:#fff;border-color:#25D366}.btn-del{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.Pending{background:#fef3c7;color:#92400e}.Processing{background:#dbeafe;color:#1e40af}.Shipped{background:#e0e7ff;color:#4338ca}.Delivered{background:#dcfce7;color:#166534}.Cancelled{background:#fee2e2;color:#991b1b}
+.status-select{padding:6px 12px;border-radius:20px;border:1px solid #ddd;font-weight:700;font-size:11px}
+.tabs{display:flex;gap:8px;padding:16px}.tabs button{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:#fff;font-weight:700}.tabs .active{background:var(--black);color:#fff}
+.section{padding:16px}.prod-form{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px;display:grid;gap:10px}
+.prod-form input,.prod-form select{padding:12px;border:1px solid var(--border);border-radius:10px}
+.p-card{display:flex;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;align-items:center}.p-card img{width:56px;height:56px;border-radius:10px;object-fit:cover}
 </style>
 </head>
 <body>
-<h2>🔐 StyleNest Admin (Phone)</h2>
-<div class="card">
-<h3>+ Navin Product Add Kar</h3>
-<input type="file" id="pimg" accept="image/*">
-<select id="pcat">
-  <option value="Jewellery">💍 Jewellery</option>
-  <option value="Watches">⌚ Watches</option>
-  <option value="Saree">🥻 Saree</option>
-  <option value="Beauty">💄 Beauty</option>
-</select>
-<input type="text" id="pname" placeholder="Product Naav - Ex: Kundan Set / Watch">
-<input type="number" id="pprice" placeholder="Kimat - Ex: 349">
-<input type="number" id="poldprice" placeholder="Juni Kimat - Ex: 699">
-<button onclick="addProduct()">ADD PRODUCT ✅</button>
+<div id="login"><div class="login-box"><h1 style="font-family:'Playfair Display'">StyleNest.</h1><p style="color:var(--grey);font-size:13px">Admin Dashboard</p><input id="pass" type="password" placeholder="Password"><button onclick="doLogin()" style="width:100%;padding:14px;background:#111;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:10px">Login</button><p style="font-size:11px;color:#aaa;margin-top:10px">Pass: admin123</p></div></div>
+
+<div id="main" style="display:none">
+<div class="top"><div class="logo">StyleNest<span>.</span> Admin</div><div style="display:flex;gap:8px"><button onclick="exportExcel()" class="btn-black" style="padding:8px 14px;border-radius:100px;border:none;font-weight:700;font-size:12px">⬇ Excel</button><button onclick="logout()" style="padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:#fff;font-weight:700">Logout</button></div></div>
+<div class="tabs"><button id="t1" class="active" onclick="showTab('orders')">Orders</button><button id="t2" onclick="showTab('products')">Products</button></div>
+
+<div id="ordersTab">
+<div class="stats"><div class="stat"><h4>TOTAL ORDERS</h4><h2 id="sTotal">0</h2></div><div class="stat"><h4>REVENUE</h4><h2 id="sRev">₹0</h2></div><div class="stat"><h4>PENDING</h4><h2 id="sPend">0</h2></div><div class="stat"><h4>DELIVERED</h4><h2 id="sDel">0</h2></div></div>
+<div class="controls"><input id="search" placeholder="Search Name/Mobile..." oninput="renderOrders()"><select id="fStatus" onchange="renderOrders()"><option value="All">All Status</option><option>Pending</option><option>Processing</option><option>Shipped</option><option>Delivered</option><option>Cancelled</option></select><button onclick="renderOrders()">🔄 Refresh</button></div>
+<div id="ordersList"></div>
 </div>
-<div id="list"></div>
+
+<div id="productsTab" style="display:none"><div class="section"><div class="prod-form"><input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price"><input id="pOld" type="number" placeholder="Old Price"><input id="pImg" placeholder="Image URL"><select id="pCat"><option>Women</option><option>Men</option><option>Saree</option><option>Jewellery</option><option>Watches</option></select><button class="btn-black" onclick="addProduct()" style="padding:14px;border-radius:12px;border:none;font-weight:700">+ Add Product</button></div><div id="prodList" style="display:grid;gap:10px"></div></div></div>
+</div>
 
 <script>
-let products = JSON.parse(localStorage.getItem('myProducts') || '[]');
-function addProduct(){
-  const file = document.getElementById('pimg').files[0];
-  if(!file){alert('Photo nivad!');return;}
-  const reader = new FileReader();
-  reader.onload = function(e){
-    let obj = {
-      img: e.target.result,
-      cat: document.getElementById('pcat').value,
-      name: document.getElementById('pname').value,
-      price: document.getElementById('pprice').value,
-      oldprice: document.getElementById('poldprice').value
-    };
-    products.push(obj);
-    localStorage.setItem('myProducts', JSON.stringify(products));
-    alert(obj.cat + ' Add Jhala! ✅');
-    show();
-  };
-  reader.readAsDataURL(file);
+function doLogin(){if(document.getElementById('pass').value==='admin123'){localStorage.setItem('adminLogged','1');document.getElementById('login').style.display='none';document.getElementById('main').style.display='block';init();}else alert('Wrong Password');}
+function logout(){localStorage.removeItem('adminLogged');location.reload();}
+if(localStorage.getItem('adminLogged')==='1'){document.getElementById('login').style.display='none';document.getElementById('main').style.display='block';}
+function showTab(t){document.getElementById('ordersTab').style.display=t==='orders'?'block':'none';document.getElementById('productsTab').style.display=t==='products'?'block':'none';document.getElementById('t1').classList.toggle('active',t==='orders');document.getElementById('t2').classList.toggle('active',t==='products');if(t==='products')renderProds();}
+function init(){renderOrders();renderProds();}
+function renderOrders(){
+let orders=JSON.parse(localStorage.getItem('orders')||'[]');
+let s=document.getElementById('search').value.toLowerCase(), f=document.getElementById('fStatus').value;
+document.getElementById('sTotal').innerText=orders.length;
+document.getElementById('sRev').innerText='₹'+orders.reduce((a,b)=>a+parseInt(b.price||0),0);
+document.getElementById('sPend').innerText=orders.filter(o=>o.status==='Pending').length;
+document.getElementById('sDel').innerText=orders.filter(o=>o.status==='Delivered').length;
+let filtered=orders.filter(o=> (f==='All'||o.status===f) && (o.customerName.toLowerCase().includes(s)||o.mobile.includes(s)) );
+let list=document.getElementById('ordersList'); list.innerHTML='';
+if(!filtered.length){list.innerHTML='<p style="text-align:center;color:#999;padding:40px">No orders</p>';return;}
+filtered.slice().reverse().forEach(o=>{
+let d=document.createElement('div'); d.className='card';
+d.innerHTML=`<div class="card-top"><span class="id">#${o.id}</span>
+<select class="status-select ${o.status}" onchange="setStatus(${o.id},this.value)">
+<option ${o.status==='Pending'?'selected':''}>Pending</option>
+<option ${o.status==='Processing'?'selected':''}>Processing</option>
+<option ${o.status==='Shipped'?'selected':''}>Shipped</option>
+<option ${o.status==='Delivered'?'selected':''}>Delivered</option>
+<option ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
+</select></div>
+<div class="info"><b>Product:</b> ${o.product}<br><b>₹${o.price}</b> | <b>${o.customerName}</b> - ${o.mobile}<br>${o.address}<br><small>${o.date}</small></div>
+<div class="actions"><a href="https://wa.me/91${o.mobile}?text=Hi%20${o.customerName}%20Your%20Order%20%23${o.id}%20is%20${o.status}%20-%20StyleNest" target="_blank" style="flex:1;text-decoration:none"><button class="btn-wa" style="width:100%">💬 ${o.status}</button></a><button class="btn-del" onclick="delOrder(${o.id})">Delete</button></div>`;
+list.appendChild(d);
+});
 }
-function show(){
-  let h='';
-  products.forEach((p,i)=>{
-    h+=`<div class="card"><span class="cat">${p.cat||'Product'}</span><img src="${p.img}"><h4>${p.name}</h4><p>₹${p.price} <s>₹${p.oldprice}</s></p><button onclick="del(${i})" style="background:red">DELETE</button></div>`;
-  });
-  document.getElementById('list').innerHTML=h;
-}
-function del(i){ if(confirm('Delete karu?')){ products.splice(i,1); localStorage.setItem('myProducts', JSON.stringify(products)); show(); } }
-show();
+function setStatus(id,st){let orders=JSON.parse(localStorage.getItem('orders')||'[]');let o=orders.find(x=>x.id===id);if(o){o.status=st;localStorage.setItem('orders',JSON.stringify(orders));renderOrders();}}
+function delOrder(id){if(!confirm('Delete?'))return;let orders=JSON.parse(localStorage.getItem('orders')||'[]');orders=orders.filter(x=>x.id!==id);localStorage.setItem('orders',JSON.stringify(orders));renderOrders();}
+function exportExcel(){let orders=JSON.parse(localStorage.getItem('orders')||'[]');if(!orders.length)return alert('No orders');let ws=XLSX.utils.json_to_sheet(orders);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Orders');XLSX.writeFile(wb,'StyleNest-Orders.xlsx');}
+let defaults=[{name:"Premium Cotton Kurta Set",price:"599",oldprice:"1299",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600",cat:"Women"},{name:"Men Oversized T-Shirt",price:"399",oldprice:"799",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",cat:"Men"},{name:"Pure Handloom Saree",price:"899",oldprice:"1999",img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",cat:"Saree"}];
+function getProds(){let p=localStorage.getItem('adminProducts');if(!p){localStorage.setItem('adminProducts',JSON.stringify(defaults));return defaults;}return JSON.parse(p);}
+function renderProds(){let prods=getProds();let list=document.getElementById('prodList');list.innerHTML='';prods.forEach((p,i)=>{let d=document.createElement('div');d.className='p-card';d.innerHTML=`<img src="${p.img}"><div style="flex:1"><div style="font-weight:600;font-size:13px">${p.name}</div><div style="font-size:12px;color:#666">₹${p.price} • ${p.cat}</div></div><button onclick="delProd(${i})" style="border:none;background:#fee2e2;color:#991b1b;padding:8px 12px;border-radius:8px">Delete</button>`;list.appendChild(d);});}
+function addProduct(){let n=document.getElementById('pName').value,p=document.getElementById('pPrice').value,o=document.getElementById('pOld').value,img=document.getElementById('pImg').value,c=document.getElementById('pCat').value;if(!n||!p||!img)return alert('Fill details');let prods=getProds();prods.push({name:n,price:p,oldprice:o||p,img,cat:c});localStorage.setItem('adminProducts',JSON.stringify(prods));renderProds();document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pOld').value='';document.getElementById('pImg').value='';}
+function delProd(i){if(!confirm('Delete?'))return;let prods=getProds();prods.splice(i,1);localStorage.setItem('adminProducts',JSON.stringify(prods));renderProds();}
+init();
 </script>
 </body>
 </html>
