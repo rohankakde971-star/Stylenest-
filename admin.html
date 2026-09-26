@@ -1,20 +1,66 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - StyleNest971</title><style>body{font-family:Arial;margin:0;background:#f5f5f5;padding:10px}h2{color:#e91e63;text-align:center}.tab{display:flex;gap:5px;position:sticky;top:0;background:#f5f5f5;padding:10px 0;z-index:10}.tab button{flex:1;padding:12px;border:none;background:#fff;border-radius:10px;font-weight:bold;box-shadow:0 2px 4px #0001}.tab button.active{background:#e91e63;color:#fff}.box{background:#fff;padding:15px;margin:10px 0;border-radius:12px;box-shadow:0 2px 5px #0001;word-break:break-word}.dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.d{background:linear-gradient(135deg,#e91e63,#9c27b0);color:#fff;padding:15px;border-radius:12px;text-align:center}.d b{font-size:24px;display:block}</style></head><body>
-<h2>StyleNest971 - Admin Panel</h2>
-<div class="tab"><button id="b1" class="active" onclick="show('dash',this)">Dashboard</button><button id="b2" onclick="show('orders',this)">Orders</button></div>
 
-<div id="dash">
-<div class="dash"><div class="d"><b id="t1">0</b>Total Orders</div><div class="d"><b id="t2">₹0</b>Total Earning</div><div class="d"><b id="t3">0</b>Pending</div><div class="d"><b id="t4">0</b>Delivered</div></div>
-<div class="box" style="text-align:center;color:grey">Khali Orders tab var click kar!</div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel - StyleNest</title>
+<style>
+body{font-family:sans-serif;background:#f2f2f2;padding:15px}
+.card{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px #0001}
+input,select{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px}
+button{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:5px;font-weight:bold}
+img{width:100%;border-radius:5px}
+.cat{font-size:11px;background:#000;color:#fff;padding:3px 8px;border-radius:10px}
+</style>
+</head>
+<body>
+<h2>🔐 StyleNest Admin (Phone)</h2>
+<div class="card">
+<h3>+ Navin Product Add Kar</h3>
+<input type="file" id="pimg" accept="image/*">
+<select id="pcat">
+  <option value="Jewellery">💍 Jewellery</option>
+  <option value="Watches">⌚ Watches</option>
+  <option value="Saree">🥻 Saree</option>
+  <option value="Beauty">💄 Beauty</option>
+</select>
+<input type="text" id="pname" placeholder="Product Naav - Ex: Kundan Set / Watch">
+<input type="number" id="pprice" placeholder="Kimat - Ex: 349">
+<input type="number" id="poldprice" placeholder="Juni Kimat - Ex: 699">
+<button onclick="addProduct()">ADD PRODUCT ✅</button>
 </div>
-
-<div id="orders" style="display:none"></div>
+<div id="list"></div>
 
 <script>
-let orders=JSON.parse(localStorage.getItem('orders')||'[]');
-function show(id,el){document.getElementById('dash').style.display='none';document.getElementById('orders').style.display='none';document.querySelectorAll('.tab button').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById(id).style.display='block';if(id=='orders')renderOrders();if(id=='dash')renderDash();}
-function renderDash(){let total=0;orders.forEach(o=>{let m=o.product.match(/Rs\.(\d+)/); if(m) total+=parseInt(m[1]);});document.getElementById('t1').innerText=orders.length;document.getElementById('t2').innerText='₹'+total;document.getElementById('t3').innerText=orders.filter(o=>o.status!=='Delivered').length;document.getElementById('t4').innerText=orders.filter(o=>o.status==='Delivered').length;}
-function renderOrders(){let c=document.getElementById('orders');c.innerHTML='';if(!orders.length){c.innerHTML='<div class=box>No Orders Yet</div>';return}orders.slice().reverse().forEach((o,i)=>{let idx=orders.length-1-i;c.innerHTML+=`<div class=box><b style="color:#e91e63">#${o.id.toString().slice(-5)} - ${o.product}</b><br><br>👤 Name: ${o.name}<br>📱 Mobile: <a href="tel:${o.mobile}">${o.mobile}</a><br>🏠 Address: ${o.address}<br>📅 Date: ${o.date}<br><br>Status: <select onchange="upS(${idx},this.value)" style="padding:5px;border-radius:5px"><option ${o.status=='Pending'?'selected':''}>Pending</option><option ${o.status=='Packed'?'selected':''}>Packed</option><option ${o.status=='Delivered'?'selected':''}>Delivered</option></select><br><br><a href="https://wa.me/91${o.mobile}?text=Hi ${o.name}, your order ${o.product} is ${o.status}. StyleNest971" style="display:inline-block;background:#25D366;color:#fff;padding:10px 15px;border-radius:8px;text-decoration:none;font-weight:bold">📲 WhatsApp Customer</a> <button onclick="delO(${idx})" style="background:red;color:#fff;border:none;padding:10px 15px;border-radius:8px;margin-left:5px">Delete</button></div>`})}
-function upS(i,v){orders[i].status=v;localStorage.setItem('orders',JSON.stringify(orders));renderDash();}
-function delO(i){if(confirm('Delete this order?')){orders.splice(i,1);localStorage.setItem('orders',JSON.stringify(orders));renderOrders();renderDash();}}
-renderDash();
-</script></body></html>
+let products = JSON.parse(localStorage.getItem('myProducts') || '[]');
+function addProduct(){
+  const file = document.getElementById('pimg').files[0];
+  if(!file){alert('Photo nivad!');return;}
+  const reader = new FileReader();
+  reader.onload = function(e){
+    let obj = {
+      img: e.target.result,
+      cat: document.getElementById('pcat').value,
+      name: document.getElementById('pname').value,
+      price: document.getElementById('pprice').value,
+      oldprice: document.getElementById('poldprice').value
+    };
+    products.push(obj);
+    localStorage.setItem('myProducts', JSON.stringify(products));
+    alert(obj.cat + ' Add Jhala! ✅');
+    show();
+  };
+  reader.readAsDataURL(file);
+}
+function show(){
+  let h='';
+  products.forEach((p,i)=>{
+    h+=`<div class="card"><span class="cat">${p.cat||'Product'}</span><img src="${p.img}"><h4>${p.name}</h4><p>₹${p.price} <s>₹${p.oldprice}</s></p><button onclick="del(${i})" style="background:red">DELETE</button></div>`;
+  });
+  document.getElementById('list').innerHTML=h;
+}
+function del(i){ if(confirm('Delete karu?')){ products.splice(i,1); localStorage.setItem('myProducts', JSON.stringify(products)); show(); } }
+show();
+</script>
+</body>
+</html>
