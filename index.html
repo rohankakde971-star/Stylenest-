@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>StyleNest971 - Fashion Store</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial;background:#fff}header{background:#e91e63;color:#fff;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.logo{font-weight:bold;font-size:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}.card{border:1px solid #eee;border-radius:12px;overflow:hidden}.card img{width:100%;height:150px;object-fit:cover}.card .info{padding:8px}.price{color:#e91e63;font-weight:bold}.mrp{color:grey;text-decoration:line-through;font-size:12px}.btn{width:100%;background:#e91e63;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:bold;margin-top:5px} #orderModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;z-index:200;justify-content:center;align-items:center}#orderBox{background:#fff;width:90%;max-width:400px;padding:20px;border-radius:15px}.input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:8px}</style></head>
-<body>
-<header><div class="logo">StyleNest971</div><div>🛒 Fashion</div></header>
-<div style="background:#fce4ec;padding:10px;text-align:center;color:#e91e63;font-weight:bold">FREE DELIVERY - All India Delivery Available!</div>
-<div class="grid" id="grid"></div>
-
-<div id="orderModal"><div id="orderBox">
-<h3 id="pname" style="color:#e91e63"></h3><p id="pprice"></p>
-<input class="input" id="cname" placeholder="Full Name *"><input class="input" id="cmob" placeholder="Mobile Number *"><textarea class="input" id="caddr" placeholder="Full Address with Pincode *"></textarea>
-<button class="btn" onclick="placeOrder()" style="background:green">PLACE ORDER NOW</button><button class="btn" onclick="closeModal()" style="background:#ccc;color:#000">Cancel</button>
-</div></div>
-
-<div id="success" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:300;justify-content:center;align-items:center;text-align:center;padding:20px"><div><h1 style="font-size:50px">✅</h1><h2 style="color:green">Order Successful!</h2><p>Thank You! Aamhi tumhala lavkarach call karu.</p><p id="oid"></p><br><a href="/" style="background:#e91e63;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none">Continue Shopping</a></div></div>
-
 <script>
-let defaultProducts=[{name:"Women Trendy Kurta Set",price:599,mrp:1299,img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400"},{name:"Men Oversized T-Shirt",price:399,mrp:799,img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},{name:"Designer Saree",price:799,mrp:1999,img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},{name:"Kids Ethnic Dress",price:499,mrp:1299,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400"},{name:"Men Casual Shirt",price:459,mrp:999,img:"https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400"},{name:"Women Palazzo Pant",price:549,mrp:1199,img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400"},{name:"Lehenga Choli Set",price:899,mrp:2499,img:"https://images.unsplash.com/photo-1583391733956-3750e79ff35e?w=400"},{name:"Girls Frock Dress",price:399,mrp:899,img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400"}];
-let products=JSON.parse(localStorage.getItem('my_products')||'null')||defaultProducts;
-let selected=null;
-function render(){document.getElementById('grid').innerHTML='';products.forEach((p,i)=>{document.getElementById('grid').innerHTML+=`<div class=card><img src="${p.img}"><div class=info><b>${p.name}</b><br><span class=price>Rs.${p.price}</span> <span class=mrp>Rs.${p.mrp}</span><br><button class=btn onclick="buy(${i})">BUY NOW</button></div></div>`})}
-function buy(i){selected=products[i];document.getElementById('pname').innerText=selected.name;document.getElementById('pprice').innerText=`Price: Rs.${selected.price}`;document.getElementById('orderModal').style.display='flex';}
-function closeModal(){document.getElementById('orderModal').style.display='none';}
-function placeOrder(){let name=document.getElementById('cname').value,mob=document.getElementById('cmob').value,addr=document.getElementById('caddr').value;if(!name||!mob||!addr)return alert('Sagali mahiti bhara!');let orders=JSON.parse(localStorage.getItem('orders')||'[]');let order={id:Date.now(),product:`${selected.name} - Rs.${selected.price}`,name:name,mobile:mob,address:addr,date:new Date().toLocaleString(),status:'Pending'};orders.push(order);localStorage.setItem('orders',JSON.stringify(orders));document.getElementById('orderModal').style.display='none';document.getElementById('oid').innerText=`Order ID: #${order.id.toString().slice(-6)}`;document.getElementById('success').style.display='flex';}
-render();
+// Show Admin Products (Jewellery + Watches) on main website
+let adminProducts = JSON.parse(localStorage.getItem('myProducts') || '[]');
+let gridContainer = document.getElementById('grid');
+
+if (gridContainer && adminProducts.length > 0) {
+  adminProducts.reverse().forEach(p => {
+    let card = document.createElement('div');
+    card.style.cssText = "background:#fff;padding:10px;border-radius:10px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1)";
+    card.innerHTML = `
+      <span style="background:#000;color:#fff;font-size:10px;padding:3px 8px;border-radius:20px">${p.cat}</span>
+      <img src="${p.img}" style="width:100%;border-radius:8px;margin:6px 0">
+      <h4 style="margin:5px 0">${p.name}</h4>
+      <p style="margin:5px 0">₹${p.price} <s style="color:gray">₹${p.oldprice}</s></p>
+      <button onclick="openOrder('${p.name}')" style="width:100%;padding:8px;background:#000;color:#fff;border:none;border-radius:5px">Order Now</button>
+    `;
+    gridContainer.prepend(card);
+  });
+}
+
+function openOrder(name) {
+  document.getElementById('pname').innerText = name;
+  document.getElementById('orderModal').style.display = 'block';
+}
 </script>
-</body></html>
+</body>
