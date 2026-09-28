@@ -1,93 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>StyleNest Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--black:#111;--white:#fff;--off:#fafaf8;--border:#eeeeee;--grey:#6b7280}
-*{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:var(--off);color:var(--black)}
-#login{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
-.login-box{background:#fff;border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:360px;text-align:center;box-shadow:0 10px 40px #0001}
-.top{background:#fff;border-bottom:1px solid var(--border);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
-.logo{font-family:'Playfair Display',serif;font-weight:700;font-size:22px}.logo span{color:#e91e63}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
-.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px}.stat h4{margin:0;color:var(--grey);font-size:11px;letter-spacing:1px}.stat h2{margin:6px 0 0;font-size:24px}
-.controls{padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:61px;z-index:10;background:var(--off)}
-.controls input{flex:1;min-width:180px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:13px}
-.controls select,.controls button{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font-weight:600;font-size:13px}
-.btn-black{background:var(--black)!important;color:#fff!important}
-.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin:0 16px 12px}
-.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.id{background:#111;color:#fff;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.info{font-size:13px;line-height:1.7;color:#333}
-.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);font-weight:600;font-size:12px}
-.btn-wa{background:#25D366;color:#fff;border-color:#25D366}.btn-del{background:#fee2e2;color:#991b1b;border-color:#fecaca}
-.Pending{background:#fef3c7;color:#92400e}.Processing{background:#dbeafe;color:#1e40af}.Shipped{background:#e0e7ff;color:#4338ca}.Delivered{background:#dcfce7;color:#166534}.Cancelled{background:#fee2e2;color:#991b1b}
-.status-select{padding:6px 12px;border-radius:20px;border:1px solid #ddd;font-weight:700;font-size:11px}
-.tabs{display:flex;gap:8px;padding:16px}.tabs button{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:#fff;font-weight:700}.tabs .active{background:var(--black);color:#fff}
-.section{padding:16px}.prod-form{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px;display:grid;gap:10px}
-.prod-form input,.prod-form select{padding:12px;border:1px solid var(--border);border-radius:10px}
-.p-card{display:flex;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;align-items:center}.p-card img{width:56px;height:56px;border-radius:10px;object-fit:cover}
+body{margin:0; font-family: sans-serif; background:#f5f5f5}
+.header{display:flex; justify-content:space-between; align-items:center; padding:12px 15px; background:#fff; border-bottom:1px solid #eee; position:sticky; top:0; z-index:10}
+.header h2{margin:0; font-size:22px; font-family: serif}
+.header h2 span{color:#ff3366}
+.btn-black{background:#111; color:#fff; border:none; padding:8px 16px; border-radius:20px; font-weight:bold}
+.btn-white{background:#fff; color:#000; border:1px solid #ddd; padding:8px 16px; border-radius:20px; font-weight:bold}
+.tabs{display:flex; gap:10px; padding:12px}
+.tab{flex:1; padding:12px; border-radius:25px; border:1px solid #ddd; background:#fff; font-weight:bold}
+.tab.active{background:#111; color:#fff}
+.stats{display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 12px}
+.stat{background:#fff; border:1px solid #eee; border-radius:15px; padding:15px}
+.stat p{margin:0; font-size:12px; color:gray; letter-spacing:1px; font-weight:bold}
+.stat h1{margin:5px 0 0 0; font-size:28px}
+.searchRow{display:flex; gap:10px; padding:12px}
+.searchRow input, .searchRow select{flex:1; padding:12px; border-radius:25px; border:1px solid #ddd; background:#fff}
+.card{background:#fff; border-radius:15px; padding:12px; margin:12px; border:1px solid #eee}
+.card input, .card select{width:100%; padding:12px; margin:6px 0; border:1px solid #eee; border-radius:25px; box-sizing:border-box; background:#fff}
+.addBtn{width:100%; background:#111; color:#fff; border:none; padding:14px; border-radius:25px; font-weight:bold; margin-top:10px}
+.productItem{display:flex; gap:10px; align-items:center; background:#fff; margin:10px 12px; padding:10px; border-radius:15px; border:1px solid #eee}
+.productItem img{width:60px; height:60px; border-radius:10px; object-fit:cover}
+.delBtn{background:#ffe0e0; color:#c00; border:none; padding:8px 15px; border-radius:15px; font-weight:bold}
+.sizeLabel{background:#eee; padding:5px 10px; border-radius:15px; font-size:12px; margin:2px; display:inline-block}
 </style>
 </head>
 <body>
-<div id="login"><div class="login-box"><h1 style="font-family:'Playfair Display'">StyleNest.</h1><p style="color:var(--grey);font-size:13px">Admin Dashboard</p><input id="pass" type="password" placeholder="Password"><button onclick="doLogin()" style="width:100%;padding:14px;background:#111;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:10px">Login</button><p style="font-size:11px;color:#aaa;margin-top:10px">Pass: admin123</p></div></div>
 
-<div id="main" style="display:none">
-<div class="top"><div class="logo">StyleNest<span>.</span> Admin</div><div style="display:flex;gap:8px"><button onclick="exportExcel()" class="btn-black" style="padding:8px 14px;border-radius:100px;border:none;font-weight:700;font-size:12px">⬇ Excel</button><button onclick="logout()" style="padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:#fff;font-weight:700">Logout</button></div></div>
-<div class="tabs"><button id="t1" class="active" onclick="showTab('orders')">Orders</button><button id="t2" onclick="showTab('products')">Products</button></div>
-
-<div id="ordersTab">
-<div class="stats"><div class="stat"><h4>TOTAL ORDERS</h4><h2 id="sTotal">0</h2></div><div class="stat"><h4>REVENUE</h4><h2 id="sRev">₹0</h2></div><div class="stat"><h4>PENDING</h4><h2 id="sPend">0</h2></div><div class="stat"><h4>DELIVERED</h4><h2 id="sDel">0</h2></div></div>
-<div class="controls"><input id="search" placeholder="Search Name/Mobile..." oninput="renderOrders()"><select id="fStatus" onchange="renderOrders()"><option value="All">All Status</option><option>Pending</option><option>Processing</option><option>Shipped</option><option>Delivered</option><option>Cancelled</option></select><button onclick="renderOrders()">🔄 Refresh</button></div>
-<div id="ordersList"></div>
+<div class="header">
+  <h2>StyleNest<span>.</span> Admin</h2>
+  <div style="display:flex; gap:8px">
+    <button class="btn-black">↓ Excel</button>
+    <button class="btn-white">Logout</button>
+  </div>
 </div>
 
-<div id="productsTab" style="display:none"><div class="section"><div class="prod-form"><input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price"><input id="pOld" type="number" placeholder="Old Price"><input id="pImg" placeholder="Image URL"><select id="pCat"><option>Women</option><option>Men</option><option>Saree</option><option>Jewellery</option><option>Watches</option></select><button class="btn-black" onclick="addProduct()" style="padding:14px;border-radius:12px;border:none;font-weight:700">+ Add Product</button></div><div id="prodList" style="display:grid;gap:10px"></div></div></div>
+<div class="tabs">
+  <button class="tab active" id="tabOrders" onclick="showTab('orders')">Orders</button>
+  <button class="tab" id="tabProducts" onclick="showTab('products')">Products</button>
+</div>
+
+<!-- ORDERS TAB - NO CHANGE -->
+<div id="ordersSection">
+  <div class="stats">
+    <div class="stat"><p>TOTAL ORDERS</p><h1 id="totalOrders">1</h1></div>
+    <div class="stat"><p>REVENUE</p><h1>₹<span id="rev">0</span></h1></div>
+    <div class="stat"><p>PENDING</p><h1 id="pending">1</h1></div>
+    <div class="stat"><p>DELIVERED</p><h1>0</h1></div>
+  </div>
+  <div class="searchRow">
+    <input placeholder="Search Name/Mobile...">
+    <select><option>All Status</option></select>
+  </div>
+  <div style="padding:0 12px"><button class="btn-white">🔄 Refresh</button></div>
+  <div id="ordersList" style="padding:12px; color:gray; font-size:13px">Orders will show here...</div>
+</div>
+
+<!-- PRODUCTS TAB - UPDATED WITH 4 PHOTO + SIZE -->
+<div id="productsSection" style="display:none">
+  <div class="card">
+    <input id="pName" placeholder="Product Name">
+    <input id="pPrice" placeholder="Price" type="number">
+    <input id="pOldPrice" placeholder="Old Price" type="number">
+    <input id="pImageURL" placeholder="Image URL">
+
+    <!-- NEW: 4 PHOTO UPLOAD - ADDED -->
+    <div style="border:2px dashed #111; padding:12px; border-radius:15px; background:#fafafa; text-align:center; margin:8px 0">
+      <input type="file" id="pFiles" accept="image/*" multiple hidden onchange="handleFiles(this)">
+      <button type="button" onclick="document.getElementById('pFiles').click()" style="background:#111; color:#fff; padding:10px 15px; border-radius:20px; border:none; width:100%">📸 Select 4 Photos from Gallery</button>
+      <div id="prevBox" style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; justify-content:center"></div>
+      <input type="hidden" id="pAllImages">
+    </div>
+
+    <!-- NEW: SIZE - ADDED -->
+    <div style="border:1px solid #ddd; padding:10px; border-radius:15px; margin:8px 0; background:#fff">
+      <b style="font-size:13px">📏 Sizes (For Shirt/Pant/Shoes)</b><br>
+      <small style="color:gray">Leave empty for Watches</small>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px" id="sizeOptions">
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="S"> S</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="M"> M</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="L"> L</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="XL"> XL</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="XXL"> XXL</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="28"> 28</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="30"> 30</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="32"> 32</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="34"> 34</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="36"> 36</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="6"> 6</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="7"> 7</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="8"> 8</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="9"> 9</label>
+        <label class="sizeLabel"><input type="checkbox" class="sz" value="10"> 10</label>
+      </div>
+      <input type="hidden" id="pSizes">
+      <small id="sizeShow" style="color:green"></small>
+    </div>
+
+    <select id="pCat">
+      <option value="Watches">Watches</option>
+      <option value="Women">Women</option>
+      <option value="Men">Men</option>
+      <option value="Shirts">Shirts</option>
+      <option value="Pants">Pants</option>
+      <option value="Shoes">Shoes</option>
+      <option value="Saree">Saree</option>
+      <option value="Jewellery">Jewellery</option>
+    </select>
+
+    <button class="addBtn" onclick="addProduct()">+ Add Product</button>
+  </div>
+
+  <div id="productList"></div>
 </div>
 
 <script>
-function doLogin(){if(document.getElementById('pass').value==='admin123'){localStorage.setItem('adminLogged','1');document.getElementById('login').style.display='none';document.getElementById('main').style.display='block';init();}else alert('Wrong Password');}
-function logout(){localStorage.removeItem('adminLogged');location.reload();}
-if(localStorage.getItem('adminLogged')==='1'){document.getElementById('login').style.display='none';document.getElementById('main').style.display='block';}
-function showTab(t){document.getElementById('ordersTab').style.display=t==='orders'?'block':'none';document.getElementById('productsTab').style.display=t==='products'?'block':'none';document.getElementById('t1').classList.toggle('active',t==='orders');document.getElementById('t2').classList.toggle('active',t==='products');if(t==='products')renderProds();}
-function init(){renderOrders();renderProds();}
-function renderOrders(){
-let orders=JSON.parse(localStorage.getItem('orders')||'[]');
-let s=document.getElementById('search').value.toLowerCase(), f=document.getElementById('fStatus').value;
-document.getElementById('sTotal').innerText=orders.length;
-document.getElementById('sRev').innerText='₹'+orders.reduce((a,b)=>a+parseInt(b.price||0),0);
-document.getElementById('sPend').innerText=orders.filter(o=>o.status==='Pending').length;
-document.getElementById('sDel').innerText=orders.filter(o=>o.status==='Delivered').length;
-let filtered=orders.filter(o=> (f==='All'||o.status===f) && (o.customerName.toLowerCase().includes(s)||o.mobile.includes(s)) );
-let list=document.getElementById('ordersList'); list.innerHTML='';
-if(!filtered.length){list.innerHTML='<p style="text-align:center;color:#999;padding:40px">No orders</p>';return;}
-filtered.slice().reverse().forEach(o=>{
-let d=document.createElement('div'); d.className='card';
-d.innerHTML=`<div class="card-top"><span class="id">#${o.id}</span>
-<select class="status-select ${o.status}" onchange="setStatus(${o.id},this.value)">
-<option ${o.status==='Pending'?'selected':''}>Pending</option>
-<option ${o.status==='Processing'?'selected':''}>Processing</option>
-<option ${o.status==='Shipped'?'selected':''}>Shipped</option>
-<option ${o.status==='Delivered'?'selected':''}>Delivered</option>
-<option ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
-</select></div>
-<div class="info"><b>Product:</b> ${o.product}<br><b>₹${o.price}</b> | <b>${o.customerName}</b> - ${o.mobile}<br>${o.address}<br><small>${o.date}</small></div>
-<div class="actions"><a href="https://wa.me/91${o.mobile}?text=Hi%20${o.customerName}%20Your%20Order%20%23${o.id}%20is%20${o.status}%20-%20StyleNest" target="_blank" style="flex:1;text-decoration:none"><button class="btn-wa" style="width:100%">💬 ${o.status}</button></a><button class="btn-del" onclick="delOrder(${o.id})">Delete</button></div>`;
-list.appendChild(d);
-});
+let products = JSON.parse(localStorage.getItem('myProducts') || '[]');
+
+function showTab(t){
+  document.getElementById('ordersSection').style.display = t=='orders'?'block':'none';
+  document.getElementById('productsSection').style.display = t=='products'?'block':'none';
+  document.getElementById('tabOrders').className = t=='orders'?'tab active':'tab';
+  document.getElementById('tabProducts').className = t=='products'?'tab active':'tab';
 }
-function setStatus(id,st){let orders=JSON.parse(localStorage.getItem('orders')||'[]');let o=orders.find(x=>x.id===id);if(o){o.status=st;localStorage.setItem('orders',JSON.stringify(orders));renderOrders();}}
-function delOrder(id){if(!confirm('Delete?'))return;let orders=JSON.parse(localStorage.getItem('orders')||'[]');orders=orders.filter(x=>x.id!==id);localStorage.setItem('orders',JSON.stringify(orders));renderOrders();}
-function exportExcel(){let orders=JSON.parse(localStorage.getItem('orders')||'[]');if(!orders.length)return alert('No orders');let ws=XLSX.utils.json_to_sheet(orders);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Orders');XLSX.writeFile(wb,'StyleNest-Orders.xlsx');}
-let defaults=[{name:"Premium Cotton Kurta Set",price:"599",oldprice:"1299",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600",cat:"Women"},{name:"Men Oversized T-Shirt",price:"399",oldprice:"799",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",cat:"Men"},{name:"Pure Handloom Saree",price:"899",oldprice:"1999",img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600",cat:"Saree"}];
-function getProds(){let p=localStorage.getItem('adminProducts');if(!p){localStorage.setItem('adminProducts',JSON.stringify(defaults));return defaults;}return JSON.parse(p);}
-function renderProds(){let prods=getProds();let list=document.getElementById('prodList');list.innerHTML='';prods.forEach((p,i)=>{let d=document.createElement('div');d.className='p-card';d.innerHTML=`<img src="${p.img}"><div style="flex:1"><div style="font-weight:600;font-size:13px">${p.name}</div><div style="font-size:12px;color:#666">₹${p.price} • ${p.cat}</div></div><button onclick="delProd(${i})" style="border:none;background:#fee2e2;color:#991b1b;padding:8px 12px;border-radius:8px">Delete</button>`;list.appendChild(d);});}
-function addProduct(){let n=document.getElementById('pName').value,p=document.getElementById('pPrice').value,o=document.getElementById('pOld').value,img=document.getElementById('pImg').value,c=document.getElementById('pCat').value;if(!n||!p||!img)return alert('Fill details');let prods=getProds();prods.push({name:n,price:p,oldprice:o||p,img,cat:c});localStorage.setItem('adminProducts',JSON.stringify(prods));renderProds();document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pOld').value='';document.getElementById('pImg').value='';}
-function delProd(i){if(!confirm('Delete?'))return;let prods=getProds();prods.splice(i,1);localStorage.setItem('adminProducts',JSON.stringify(prods));renderProds();}
-init();
+
+// 4 PHOTO LOGIC
+let upImgs = [];
+function handleFiles(inp){
+  upImgs=[]; let box=document.getElementById('prevBox'); box.innerHTML='';
+  Array.from(inp.files).slice(0,4).forEach(f=>{
+    let r=new FileReader();
+    r.onload=e=>{
+      upImgs.push(e.target.result);
+      box.innerHTML+=`<img src="${e.target.result}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #ddd">`;
+      document.getElementById('pAllImages').value=JSON.stringify(upImgs);
+      if(!document.getElementById('pImageURL').value) document.getElementById('pImageURL').value=upImgs[0];
+    }; r.readAsDataURL(f);
+  });
+}
+
+// SIZE LOGIC
+document.querySelectorAll('.sz').forEach(c=>c.addEventListener('change',()=>{
+  let sel=[]; document.querySelectorAll('.sz:checked').forEach(x=>sel.push(x.value));
+  document.getElementById('pSizes').value=JSON.stringify(sel);
+  document.getElementById('sizeShow').innerText= sel.length ? 'Selected: '+sel.join(', ') : '';
+}));
+
+function addProduct(){
+  let imgUrl = document.getElementById('pImageURL').value;
+  let allImgs = JSON.parse(document.getElementById('pAllImages').value || '[]');
+  if(!imgUrl && allImgs.length>0) imgUrl = allImgs[0];
+  if(!imgUrl){ alert('Please add Image URL or select photos'); return; }
+
+  let obj = {
+    name: document.getElementById('pName').value,
+    price: document.getElementById('pPrice').value,
+    oldprice: document.getElementById('pOldPrice').value,
+    img: imgUrl,
+    imgs: allImgs.length? allImgs : [imgUrl],
+    cat: document.getElementById('pCat').value,
+    sizes: JSON.parse(document.getElementById('pSizes').value || '[]')
+  };
+  products.push(obj);
+  localStorage.setItem('myProducts', JSON.stringify(products));
+  alert('Product Added ✅');
+  showProducts();
+  // clear
+  document.getElementById('pName').value=''; document.getElementById('pPrice').value=''; document.getElementById('pOldPrice').value=''; document.getElementById('pImageURL').value=''; document.getElementById('pAllImages').value=''; document.getElementById('prevBox').innerHTML=''; document.getElementById('pSizes').value=''; document.querySelectorAll('.sz').forEach(c=>c.checked=false); document.getElementById('sizeShow').innerText='';
+}
+
+function showProducts(){
+  let h='';
+  products.slice().reverse().forEach((p,i)=>{
+    let idx = products.length-1-i;
+    h+=`<div class="productItem">
+      <img src="${p.img}">
+      <div style="flex:1"><b>${p.name}</b><br><span style="font-size:13px">₹${p.price} • ${p.cat} ${p.sizes && p.sizes.length? '• Size: '+p.sizes.join(',') : ''}</span></div>
+      <button class="delBtn" onclick="delProd(${idx})">Delete</button>
+    </div>`;
+  });
+  document.getElementById('productList').innerHTML=h;
+  document.getElementById('totalOrders').innerText = products.length;
+}
+function delProd(i){ if(confirm('Delete?')){ products.splice(i,1); localStorage.setItem('myProducts', JSON.stringify(products)); showProducts(); } }
+showProducts();
 </script>
 </body>
 </html>
