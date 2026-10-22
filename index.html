@@ -47,13 +47,11 @@
 <button onclick="openCart()" style="background:var(--black);color:#fff;border:none;padding:9px 16px;border-radius:100px;font-weight:700;font-size:13px">CART <span id="cartCount">0</span></button>
 </div>
 </div>
-
 <div class="hero">
 <h1>Minimal. Premium.<br>Timeless Fashion.</h1>
 <p>Free Delivery • COD Available • 7 Days Easy Return</p>
 </div>
 <div class="trustbar"><span>✓ 100% SECURE PAYMENT</span><span>✓ PREMIUM QUALITY</span><span>✓ FAST DELIVERY</span></div>
-
 <div class="filters" id="filters">
 <button class="active" onclick="setCat('All',this)">All Products</button>
 <button onclick="setCat('Women',this)">Women</button>
@@ -61,17 +59,15 @@
 <button onclick="setCat('Saree',this)">Saree</button>
 <button onclick="setCat('Jewellery',this)">Jewellery</button>
 <button onclick="setCat('Watches',this)">Watches</button>
+<button onclick="setCat('Home decor',this)">Home decor</button>
 </div>
-
 <div class="grid" id="grid"></div>
-
 <div class="section">
 <h2>What Our Customers Say</h2><p class="sub">Trusted by 5000+ happy customers ★ 4.8/5 Rating</p>
 <div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Priya S. from Nagpur</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Quality is exceptional! Looks better than the photos. Fast delivery to my village. Highly recommend StyleNest."</p></div>
 <div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Rahul M. from Pune</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Watch quality is amazing for this price. Premium packaging. Will order again."</p></div>
 <div class="review-card"><div class="stars">★★★★★</div><b style="font-size:14px">Anjali K. from Aurangabad</b><p style="margin:6px 0 0;color:#555;font-size:13px;line-height:1.5">"Saree is beautiful, everyone asked where I bought it. 100% premium cotton."</p></div>
 </div>
-
 <div class="section" style="background:var(--off)">
 <h2>Video Reviews</h2><p class="sub">Real customers wearing our collection</p>
 <div class="video-grid">
@@ -79,12 +75,10 @@
 <div class="video-box">▶️ @rahul_mens <span>Unboxing</span></div>
 </div>
 </div>
-
 <div class="section story">
 <h2>Our Story</h2>
 <p>StyleNest was born in Gangapur with one mission — to bring <b>premium, handcrafted fashion</b> at affordable prices. We work directly with weavers and artisans. No middleman. <br><br>100% Premium Cotton • Handcrafted Jewellery • Ethically Made</p>
 </div>
-
 <div class="footer">
 <div class="f-grid">
 <div><h4>CONTACT & SUPPORT</h4><p>WhatsApp: +91 7219384469</p><p>Gangapur, Sambhajinagar, MH</p><p>Instagram: @stylenest971</p><p>Support: 10AM - 8PM</p></div>
@@ -93,17 +87,13 @@
 <div class="payments"><span>VISA</span><span>MASTERCARD</span><span>UPI</span><span>NET BANKING</span><span>COD</span><span>SECURE PAYMENTS 🔒</span></div>
 <p style="text-align:center;margin-top:28px;color:#6b7280;font-size:11px;letter-spacing:1px">© 2026 STYLENEST. CRAFTED WITH LOVE IN MAHARASHTRA.</p>
 </div>
-
 <a class="wa" href="https://wa.me/917219384469">💬</a>
-
 <div id="cartDrawer">
 <div style="padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)"><h3 style="margin:0;font-family:'Playfair Display'">Your Cart</h3><button onclick="closeCart()" style="border:none;background:var(--light);width:36px;height:36px;border-radius:50%">✕</button></div>
 <div id="cartItems" style="flex:1;overflow:auto;padding:10px 20px"></div>
 <div style="padding:20px;border-top:1px solid var(--border)"><button class="b-black" style="width:100%;padding:15px;border-radius:12px;font-weight:700" onclick="checkoutCart()">Proceed to Checkout</button></div>
 </div>
-
 <div id="quickView"><div class="modal" style="max-width:360px;padding:0;overflow:hidden"><img id="qvImg" style="width:100%;height:380px;object-fit:cover"><div style="padding:18px"><h3 id="qvName" style="text-align:left;margin:0"></h3><p id="qvPrice" style="font-weight:700;margin:8px 0"></p><p style="color:var(--grey);font-size:13px;line-height:1.5">Premium quality fabric with attention to detail. Model is wearing size M. 100% breathable cotton.</p><div style="display:flex;gap:8px;margin-top:14px"><button class="b-light" style="flex:1" onclick="closeQV()">Close</button><button class="b-black" style="flex:1" id="qvBuy">Buy Now</button></div></div></div></div>
-
 <div id="orderModal"><div class="modal">
 <h3>Order Details</h3><p class="small">Cash on Delivery Available</p>
 <p id="selProd" style="text-align:center;font-weight:700;color:#111;background:var(--off);padding:10px;border-radius:10px;font-size:13px"></p>
@@ -112,9 +102,8 @@
 <button class="b-light" onclick="closeModal()">Cancel</button>
 <p style="text-align:center;color:var(--grey);font-size:11px;margin-top:10px">🔒 100% Secure • Your data is safe</p>
 </div></div>
-
 <script>
-let products=[
+let defaultProducts=[
 {name:"Premium Cotton Kurta Set",price:"599",oldprice:"1299",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",cat:"Women"},
 {name:"Men Oversized T-Shirt - Black",price:"399",oldprice:"799",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",cat:"Men"},
 {name:"Pure Handloom Saree",price:"899",oldprice:"1999",img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800",cat:"Saree"},
@@ -124,6 +113,15 @@ let products=[
 {name:"Gold Plated Temple Necklace",price:"449",oldprice:"1299",img:"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800",cat:"Jewellery"},
 {name:"Couple Watch - His & Hers",price:"799",oldprice:"1999",img:"https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=800",cat:"Watches"}
 ];
+let adminProducts = JSON.parse(localStorage.getItem('myProducts') || localStorage.getItem('stylenest_products') || '[]');
+adminProducts = adminProducts.map(p => ({
+  name: p.name,
+  price: String(p.price),
+  oldprice: p.oldprice ? String(p.oldprice) : String(Math.round(parseInt(p.price)*1.8)),
+  img: p.img,
+  cat: p.cat || 'Home decor'
+}));
+let products=[...adminProducts.reverse(),...defaultProducts];
 let curCat='All', selProd=null, cart=JSON.parse(localStorage.getItem('cart')||'[]');
 function setCat(c,el){curCat=c; document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active')); el.classList.add('active'); render();}
 function render(){
